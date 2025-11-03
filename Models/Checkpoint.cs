@@ -1,13 +1,17 @@
-﻿namespace KundenUmfrageTool.Api.Models
+﻿namespace KundenUmfrageTool.Api.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("Checkpoints")]
+public class Checkpoint
 {
-    public class Checkpoint
-    {
-        public long Id { get; set; }  // Datentyp long verwendet, um auch bei vielen Datensätzen(z.B Millionen Bewertungen) eine sichere Identifikation zu gewährleisten
-        public string Name { get; set; } = string.Empty;
+    [Key]
+    public int Id { get; set; }
 
-        // max. 300 Zeichen laut Lastenheft
-        public string? Description { get; set; }
-    }
+    [Required]                    //Name darf nicht leer sein
+    [MaxLength(200)]              // sinvolle obergrenze für Anzeige/listen(optional)
+    public string Name { get; set; } = string.Empty;
 
-
+    [MaxLength(300)]
+    public string? Description { get; set; }
 }

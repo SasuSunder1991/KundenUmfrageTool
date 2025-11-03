@@ -1,21 +1,38 @@
-﻿namespace KundenUmfrageTool.Api.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KundenUmfrageTool.Api.Models
 {
     public class Restaurant
     {
-        public long Id { get; set; }
+        [Key]
+        public int Id { get; set; }
+
+        [Required, MaxLength(200)]
         public string Name { get; set; } = string.Empty;
+
+        [MaxLength(200)]
+        public string? Street { get; set; }
+
+        [MaxLength(200)]
+        public string? ZipCode { get; set; }
+
+        [MaxLength(200)]
         public string? City { get; set; }
+
+        [MaxLength(100)]
         public string? Country { get; set; }
-        public long? ManagerUserId { get; set; }
 
-        // Der Benutzer (AppUser), der als Manager für dieses Restaurant verantwortlich ist.
-        // Ein Restaurant hat genau einen Manager, ein Manager gehört genau zu einem Restaurant.
-        // Kann null sein, wenn noch kein Manager zugeordnet wurde.
-        public AppUser? ManagerUser { get; set; }
-        public long? SurveyId { get; set; }
+        // Beziehung zu Manager (User)
+        public int? ManagerUserId { get; set; }
+        public User? ManagerUser { get; set; }
 
-        // Die Umfrage (Survey), die diesem Restaurant zugeordnet ist.
-        // Kann null sein, wenn für dieses Restaurant noch keine Umfrage hinterlegt wurde.
+        // Beziehung zu Umfrage (Survey)
+        public int? SurveyId { get; set; }
         public Survey? Survey { get; set; }
+
+        // Beziehung zu Bewertungen (Ratings)
+        public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+        public ICollection<Survey> Surveys { get; set; } = new List<Survey>();
+
     }
 }

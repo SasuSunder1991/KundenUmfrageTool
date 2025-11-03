@@ -1,22 +1,20 @@
-﻿// Repräsentiert eine Umfrage (z. B. "Standard Umfrage")
-// Eine Umfrage besteht aus mehreren Bewertungsbereichen (Checkpoints)
-using KundenUmfrageTool.Api.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Survey
+namespace KundenUmfrageTool.Api.Models
 {
-    public long Id { get; set; } // Eindeutige ID der Umfrage
-    public string Name { get; set; } = string.Empty; // Name der Umfrage
-    public string? Description { get; set; } // Optionale Beschreibung
-    // Liste der zugehörigen Checkpoints (Verknüpfung über SurveyCheckpoint)
-    public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
-}
+    [Table("Surveys")]
+    public class Survey
+    {
+        [Key]
+        public int Id { get; set; }
 
-// Verbindungstabelle zwischen Survey und Checkpoint (n:m-Beziehung)
-public class SurveyCheckpoint
-{
-    
-    public long Id { get; set; }   // Primärschlüssel
-    public Survey Survey { get; set; } = default!; // Zugehörige Umfrage
-    public long CheckpointId { get; set; } // ID des Checkpoints
-    public Checkpoint Checkpoint { get; set; } = default!; // Zugehöriger Bereich
+        [Required, MaxLength(150)]
+        public string Name { get; set; } = string.Empty;
+
+        [MaxLength(500)]
+        public string? Description { get; set; }
+
+        public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
+    }
 }

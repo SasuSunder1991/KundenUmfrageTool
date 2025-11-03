@@ -15,7 +15,7 @@ namespace KundenUmfrageTool.Api.Controllers.Public
             _db = db;
         }
 
-        // --- 1️⃣ Alle Checkpoints ---
+        // --- 1️ Alle Checkpoints ---
         [HttpGet("checkpoints")]
         public async Task<IActionResult> GetCheckpoints()
         {
@@ -23,15 +23,27 @@ namespace KundenUmfrageTool.Api.Controllers.Public
             return Ok(checkpoints);
         }
 
-        // --- 2️⃣ Alle Restaurants ---
+        // --- 2️ Alle Restaurants ---
         [HttpGet("restaurants")]
         public async Task<IActionResult> GetRestaurants()
         {
             var restaurants = await _db.Restaurants
-                .Include(r => r.ManagerUser)  // falls Navigation-Property existiert
+                .Include(r => r.ManagerUser) // falls vorhanden
                 .ToListAsync();
 
             return Ok(restaurants);
         }
+        [HttpGet("surveys")]
+        public async Task<IActionResult> GetSurveys()
+        {
+            var surveys = await _db.Surveys
+                .Include(s => s.SurveyCheckpoints)
+                    .ThenInclude(sc => sc.Checkpoint)
+                .ToListAsync();
+
+            return Ok(surveys);
+        }
+
+
     }
 }
