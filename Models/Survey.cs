@@ -15,6 +15,12 @@ namespace KundenUmfrageTool.Api.Models
         [MaxLength(500)]
         public string? Description { get; set; }
 
+        // Jede Umfrage gehört zu genau einem Restaurant
+        [ForeignKey(nameof(Restaurant))]
+        public int RestaurantId { get; set; }  // nicht nullable
+        public Restaurant? Restaurant { get; set; }
+
+        // Eine Umfrage hat mehrere Checkpoints
         public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
     }
 }

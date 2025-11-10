@@ -26,12 +26,10 @@ namespace KundenUmfrageTool.Api.Models
         public int? ManagerUserId { get; set; }
         public User? ManagerUser { get; set; }
 
-        // Beziehung zu Umfrage (Survey)
-        public int? SurveyId { get; set; }
-        public Survey? Survey { get; set; }
-
         // Beziehung zu Bewertungen (Ratings)
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+
+        // Ein Restaurant kann mehrere Umfragen haben
         public ICollection<Survey> Surveys { get; set; } = new List<Survey>();
 
     }

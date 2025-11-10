@@ -6,18 +6,15 @@ namespace KundenUmfrageTool.Api.Models
     [Table("Users")]
     public class User
     {
-
         [Key]
         public int Id { get; set; }
 
         // Vorname (Pflichtfeld)
-        [Required]
-        [MaxLength(100)]
+        [Required, MaxLength(100)]
         public string FirstName { get; set; } = string.Empty;
 
         // Nachname (Pflichtfeld)
-        [Required]
-        [MaxLength(100)]
+        [Required, MaxLength(100)]
         public string LastName { get; set; } = string.Empty;
 
         // Email (Pflichtfeld, darf NICHT geändert werden)
@@ -27,8 +24,7 @@ namespace KundenUmfrageTool.Api.Models
         public string Email { get; set; } = string.Empty;
 
         // Passwort-Hash (wird verschlüsselt gespeichert)
-        [Required]
-        [MaxLength(255)]
+        [Required, MaxLength(255)]
         public string PasswordHash { get; set; } = string.Empty;
 
         // Rolle (Fremdschlüssel zur Tabelle Roles)

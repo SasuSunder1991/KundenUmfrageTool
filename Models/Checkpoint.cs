@@ -14,4 +14,9 @@ public class Checkpoint
 
     [MaxLength(300)]
     public string? Description { get; set; }
+
+
+    //  Beziehung zu SurveyCheckpoints (n:m)
+    public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
+
 }

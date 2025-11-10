@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KundenUmfrageTool.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251103072557_Initial")]
-    partial class Initial
+    [Migration("20251104104112_RebuildSchema")]
+    partial class RebuildSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,9 +112,6 @@ namespace KundenUmfrageTool.Api.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<int?>("SurveyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ZipCode")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
@@ -122,8 +119,6 @@ namespace KundenUmfrageTool.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ManagerUserId");
-
-                    b.HasIndex("SurveyId");
 
                     b.ToTable("Restaurants");
                 });
@@ -138,11 +133,24 @@ namespace KundenUmfrageTool.Api.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "QM-Manager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Restaurant-Manager"
+                        });
                 });
 
             modelBuilder.Entity("KundenUmfrageTool.Api.Models.Survey", b =>
@@ -162,7 +170,7 @@ namespace KundenUmfrageTool.Api.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int?>("RestaurantId")
+                    b.Property<int>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -174,23 +182,18 @@ namespace KundenUmfrageTool.Api.Migrations
 
             modelBuilder.Entity("KundenUmfrageTool.Api.Models.SurveyCheckpoint", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SurveyId")
                         .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CheckpointId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SurveyId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SurveyId", "CheckpointId");
 
                     b.HasIndex("CheckpointId");
-
-                    b.HasIndex("SurveyId");
 
                     b.ToTable("SurveyCheckpoints");
                 });
@@ -234,6 +237,9 @@ namespace KundenUmfrageTool.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
@@ -272,27 +278,24 @@ namespace KundenUmfrageTool.Api.Migrations
                         .WithMany()
                         .HasForeignKey("ManagerUserId");
 
-                    b.HasOne("KundenUmfrageTool.Api.Models.Survey", "Survey")
-                        .WithMany()
-                        .HasForeignKey("SurveyId");
-
                     b.Navigation("ManagerUser");
-
-                    b.Navigation("Survey");
                 });
 
             modelBuilder.Entity("KundenUmfrageTool.Api.Models.Survey", b =>
                 {
-                    b.HasOne("KundenUmfrageTool.Api.Models.Restaurant", null)
+                    b.HasOne("KundenUmfrageTool.Api.Models.Restaurant", "Restaurant")
                         .WithMany("Surveys")
                         .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("KundenUmfrageTool.Api.Models.SurveyCheckpoint", b =>
                 {
                     b.HasOne("KundenUmfrageTool.Api.Models.Checkpoint", "Checkpoint")
-                        .WithMany()
+                        .WithMany("SurveyCheckpoints")
                         .HasForeignKey("CheckpointId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -317,6 +320,11 @@ namespace KundenUmfrageTool.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("KundenUmfrageTool.Api.Models.Checkpoint", b =>
+                {
+                    b.Navigation("SurveyCheckpoints");
                 });
 
             modelBuilder.Entity("KundenUmfrageTool.Api.Models.Restaurant", b =>
