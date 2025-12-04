@@ -1,15 +1,41 @@
-# Build-Ausgaben
+# Build-Ausgaben (niemals committen)
 bin/
 obj/
 
-# VS/IDE
+# Visual Studio / IDE
 .vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / Jetbrains
+.idea/
+*.iml
 
 # Logs
 *.log
 
-# Lokale Einstellungen/Secrets (niemals pushen)
+# Publish-Ordner
+/publish/
+/out/
+
+# Lokale Einstellungen / Secrets (niemals pushen!)
 appsettings.Development.json
 appsettings.Local.json
+appsettings.*.local.json
+
+# Zertifikate / Schlüssel
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Docker overrides
+**/docker-compose.override.yml
+
+# Sonstige temporäre Dateien
+*.tmp
+*.temp
+*.cache
+*.bak

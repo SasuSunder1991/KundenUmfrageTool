@@ -21,9 +21,18 @@ namespace KundenUmfrageTool.Api.Services
             // Wenn später jemand mit einem Token anfragt, kann das System daraus lesen, wer das ist und welche Rechte er hat.
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.Role?.Name ?? string.Empty)
+                // Benutzer-ID
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+
+                // E-Mail
+                new Claim(ClaimTypes.Email, user.Email),
+
+                // Rollenname (optional, aber lassen wir drin)
+                new Claim(ClaimTypes.Role, user.Role?.Name ?? string.Empty),
+
+                // WICHTIG! → Rollensystem  App
+                // QM = 1, RestaurantManager = 2
+                new Claim("roleId", user.RoleId.ToString())
             };
 
             // das ist geheime Schlüssel, mit dem Token verschlüsselt und signiert wird.

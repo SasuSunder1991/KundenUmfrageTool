@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KundenUmfrageTool.Api.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -70,11 +71,11 @@ namespace KundenUmfrageTool.Api.Controllers
                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if (user is null)
-                return Unauthorized("Invalid credentials.");
+                return Unauthorized("User not Found");
 
             // 2️ Passwort prüfen
             if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
-                return Unauthorized("Invalid credentials.");
+                return Unauthorized("Wrong password");
 
             // 3 ggf. deaktivierte User abweisen
             if (!user.IsActive)

@@ -34,3 +34,32 @@ namespace KundenUmfrageTool.Api.Models
         public Checkpoint? Checkpoint { get; set; }
     }
 }
+
+
+/*
+ 
+ Eine Bewertung besteht aus:
+
+ * ⭐ Score (1–5)
+
+* optionalem Kommentar
+
+* Checkpoint (Service/Essen/...)
+
+* Survey (Umfrage)
+
+* Restaurant
+
+Jede Kundenbewertung ist vollständig verbunden, daher kannst du später:
+
+* Durchschnitt berechnen
+
+* Beste/schlechteste Bewertung finden
+
+*Kommentare nach Bereich gruppieren
+
+ Diese Klasse bildet die Grundlage für die gesamte Auswertung!
+ 
+ 
+ 
+ */

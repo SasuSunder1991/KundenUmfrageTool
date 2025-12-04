@@ -25,7 +25,7 @@ namespace KundenUmfrageTool.Api.Services
 
             // Bereritet eine Datenbank-Abfrage für alle Benutzer vor, inklusive ihrer Rolle (Admin, manager etc)
             var q = _db.Users.Include(u => u.Role).AsQueryable();
-            // Wenn search angegeben ist (z.B. ?search=alex), filtert die Metthode nach Namen oder Email
+            // Wenn search angegeben ist (z.B. ?search=admin), filtert die Metthode nach Namen oder Email
             if (!string.IsNullOrWhiteSpace(search))
                 q = q.Where(u =>
                     u.Email.Contains(search) ||
@@ -37,13 +37,6 @@ namespace KundenUmfrageTool.Api.Services
             //wandelt die Datenbank-Objekte in DTOs(vereinfachte Objekte fürs Frontend)um.
             return _mapper.Map<IEnumerable<UserDto>>(users);
         }
-
-
-        // Holt Benutzer aus der DB
-        // Optional mit Filter
-        // Gibt sie als einfache Liste ans Frontend zurück
-
-
         //Methode: GetUserDetailAsync(int id)=> einzelne Benutzerdetails anhands der Id abrufen
         // Include(u =u.Id ==id) ==> auch hier wird die Rolle mitgeladen
         //.FirstOrDefaultAsync(u => u.Id == id) ===> sucht genau den Benutzer mit dieser ID
@@ -61,3 +54,25 @@ namespace KundenUmfrageTool.Api.Services
     //Gibt ihn ans Frontend zurück(oder null, wenn es ihn nicht gibt)
 }
 
+/*  
+ Admin Service --Benutzer Service 
+Was machst die Service??
+Funktion : GetUserListAsysc
+  - Hollt alle Benutzer aus der Datenbank
+  - Lädt auch ihre Rolle mit (QM, Restaurant-Manger)
+  - Optionaler Filter: Name , Email, Vorname -> suchfeld im Frontend
+  - Konviertiert Daten zu UserDto für Frontend 
+  ---> Gibts eine Liste von Benutzer zurück --gefiltert oder komplett
+ 
+Funktion: GetUserDetailAsync(id)
+
+  - Hollt einen Benutzer per ID
+  - Mit zugehörigenRolle
+  - Gibt ihn als UserDto zurück
+  ---> Liefert die Benutzerdaten für die Detailseite
+
+
+
+ 
+ 
+ */

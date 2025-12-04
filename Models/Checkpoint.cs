@@ -20,3 +20,31 @@ public class Checkpoint
     public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
 
 }
+
+
+/*
+ Ein Checkpoint ist ein Bewertungsbereich, z. B.:
+
+* Service
+
+* Getränke
+
+* Essen
+
+* Ambiente
+
+Ein Checkpoint kann:
+
+* in mehreren Umfragen vorkommen (z. B. Service gibt es in jeder Umfrage)
+
+* eine optionale Beschreibung haben
+
+„SurveyCheckpoints“ ist ein n:m Join, der eine Checkpoint-Liste an eine Survey bindet.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */

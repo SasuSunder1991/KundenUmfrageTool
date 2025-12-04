@@ -24,3 +24,17 @@ namespace KundenUmfrageTool.Api.Models
         public Checkpoint? Checkpoint { get; set; }
     }
 }
+/* 
+ Eine Survey besteht aus mehreren Checkpoints.
+
+Diese Tabelle macht folgende Verbindungen möglich:
+
+Survey 1 -> Service
+Survey 1 -> Essen
+Survey 1 -> Getränke
+
+
+Dadurch wird eine Umfrage flexibel definierbar.
+ 
+ 
+ */

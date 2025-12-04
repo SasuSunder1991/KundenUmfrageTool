@@ -17,10 +17,27 @@ namespace KundenUmfrageTool.Api.Models
 
         // Jede Umfrage gehört zu genau einem Restaurant
         [ForeignKey(nameof(Restaurant))]
+
         public int RestaurantId { get; set; }  // nicht nullable
+
         public Restaurant? Restaurant { get; set; }
 
         // Eine Umfrage hat mehrere Checkpoints
         public ICollection<SurveyCheckpoint> SurveyCheckpoints { get; set; } = new List<SurveyCheckpoint>();
     }
 }
+
+/*
+ * Eine Survey gehört immer genau einem Restaurant.
+Ein Restaurant kann mehrere Surveys haben (z. B. Sommer-Surveys, Q4-Survey).
+
+Jede Survey hat:
+
+* Name
+
+* Beschreibung
+
+ * Checkpoints über SurveyCheckpoint
+ 
+
+ */

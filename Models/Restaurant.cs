@@ -32,5 +32,33 @@ namespace KundenUmfrageTool.Api.Models
         // Ein Restaurant kann mehrere Umfragen haben
         public ICollection<Survey> Surveys { get; set; } = new List<Survey>();
 
+        [MaxLength(50)]
+        public string? QrCodeKey { get; set; }
+
     }
 }
+/* 
+ Ein Restaurant hat:
+
+* Name
+
+* Adresse
+
+* ManagerUserId (Restaurant-Manager)
+
+* Ratings (alle abgegebenen Bewertungen)
+
+* Surveys (alle Umfragen, die diesem Restaurant gehören)
+
+* QrCodeKey (wird später zum Generieren des QR-Codes verwendet)
+
+Sehr wichtig für Auswertung:
+Über Ratings kannst du alle Bewertungen des Restaurants abrufen.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
