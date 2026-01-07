@@ -88,3 +88,68 @@ namespace KundenUmfrageTool.Api.Controllers.Restaurant
         }
     }
 }
+/*
+ 
+ 
+Dieser Controller benutzt den IRestaurantService, der die komplette Logik enthält.
+
+Er unterstützt beide Rollen:
+QM-Manager → sieht ALLES
+Restaurant-Manager → sieht NUR sein Restaurant
+
+
+GET /api/restaurants
+
+Nur QM-Manager:
+
+[Authorize(Policy = "QM")]
+--> Holt alle Restaurants
+-->Für Dashboard & Verwaltung laut Lastenheft/Pflichtenheft notwendig
+  QM sieht alle Restaurants.
+
+ 
+
+GET /api/restaurants/mine
+
+Nur Restaurant-Manager:
+
+[Authorize(Policy = "RestaurantManager")]
+
+
+Liest UserId aus Token (ClaimTypes.NameIdentifier)
+
+Holt alle Restaurants, die diesem Manager gehören
+
+Pflichtenheft:
+
+Restaurant-Manager sollen nur Daten ihres Restaurants sehen.
+
+
+POST /api/restaurants
+
+Nur QM-Manager:
+
+Legt ein neues Restaurant an
+
+Nutzt RestaurantDto vom Frontend
+
+-->Neues Restaurant erstellen.
+
+
+
+PUT /api/restaurants/{id}
+
+Nur QM:
+Bearbeitet Restaurantdaten
+
+
+--> Restaurant bearbeiten.
+
+
+DELETE /api/restaurants/{id}
+
+Nur QM:
+-->Restaurant löschen.
+
+ 
+ */

@@ -1,4 +1,4 @@
-﻿using KundenUmfrageTool.Api.Services.Reports;
+﻿using KundenUmfrageTool.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

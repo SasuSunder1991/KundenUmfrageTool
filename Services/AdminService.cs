@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using KundenUmfrageTool.Api.Data;
 using KundenUmfrageTool.Api.Dtos;
+using KundenUmfrageTool.Api.Dtos.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace KundenUmfrageTool.Api.Services
@@ -20,7 +21,7 @@ namespace KundenUmfrageTool.Api.Services
         }
         // Methode GetUserListAsync(string ? search =null)
         // Eine Liste alle Benutzer abrufen -optional gefiltert nach einem Suchbegriff
-        public async Task<IEnumerable<UserDto>> GetUserListAsync(string? search = null)
+        public async Task<IEnumerable<UserListDto>> GetUserListAsync(string? search = null)
         {
 
             // Bereritet eine Datenbank-Abfrage für alle Benutzer vor, inklusive ihrer Rolle (Admin, manager etc)
@@ -35,17 +36,17 @@ namespace KundenUmfrageTool.Api.Services
             // await q.ToListAsync(); => Führt die Abfrage wirklich in der Datenbank aus
             var users = await q.ToListAsync();
             //wandelt die Datenbank-Objekte in DTOs(vereinfachte Objekte fürs Frontend)um.
-            return _mapper.Map<IEnumerable<UserDto>>(users);
+            return _mapper.Map<IEnumerable<UserListDto>>(users);
         }
         //Methode: GetUserDetailAsync(int id)=> einzelne Benutzerdetails anhands der Id abrufen
         // Include(u =u.Id ==id) ==> auch hier wird die Rolle mitgeladen
         //.FirstOrDefaultAsync(u => u.Id == id) ===> sucht genau den Benutzer mit dieser ID
         // Wenn  gefunden → wird er mit AutoMapper in ein UserDto umgewandelt. Wenn nicht gefunden → gibt null zurück.
-        public async Task<UserDto?> GetUserDetailAsync(int id)
+        public async Task<UserDetailDto?> GetUserDetailAsync(int id)
         {
             var user = await _db.Users.Include(u => u.Role)
                                       .FirstOrDefaultAsync(u => u.Id == id);
-            return user is null ? null : _mapper.Map<UserDto>(user);
+            return user is null ? null : _mapper.Map<UserDetailDto>(user);
         }
     }
 

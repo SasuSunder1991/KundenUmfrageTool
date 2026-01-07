@@ -1,7 +1,6 @@
 using KundenUmfrageTool.Api.Data;
 using KundenUmfrageTool.Api.Profiles;
 using KundenUmfrageTool.Api.Services;
-using KundenUmfrageTool.Api.Services.Reports;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +24,7 @@ services.AddScoped<TokenService>();
 services.AddScoped<AdminService>();
 services.AddScoped<IRestaurantService, RestaurantService>();
 services.AddScoped<IReportService, ReportService>();
+services.AddScoped<IUserService, UserService>();
 
 // ---------- AUTHORIZATION POLICIES ----------
 builder.Services.AddAuthorization(options =>
@@ -54,7 +54,8 @@ services.AddCors(options =>
 // ---------- CONTROLLERS + JSON OPTIONS ----------
 services.AddControllers().AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.PropertyNamingPolicy = null;   // <-- WICHTIG!!
+    options.JsonSerializerOptions.PropertyNamingPolicy = 
+    System.Text.Json.JsonNamingPolicy.CamelCase;   
 });
 
 services.AddEndpointsApiExplorer();

@@ -2,7 +2,7 @@
 using KundenUmfrageTool.Api.Dtos.Reports;
 using Microsoft.EntityFrameworkCore;
 
-namespace KundenUmfrageTool.Api.Services.Reports
+namespace KundenUmfrageTool.Api.Services
 {
     public class ReportService : IReportService
     {

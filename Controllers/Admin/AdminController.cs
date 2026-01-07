@@ -24,7 +24,7 @@ namespace KundenUmfrageTool.Api.Controllers
         public async Task<IActionResult> GetUserDetail(int id)
         {
             var dto = await _service.GetUserDetailAsync(id);
-            return dto is null ? NotFound("User not found") : Ok(dto);
+            return dto is null ? NotFound("User not found") : Ok(dto);     // ternäre Bedingung (? :) ersetzt hier ein klassisches if/else.
         }
     }
 }
@@ -36,10 +36,10 @@ namespace KundenUmfrageTool.Api.Controllers
     [Authorize(Policy = "QM")]  => laut pflichheft Nur Qm-Manger dürfen Benutzer sehen und verwalten
     
 *  Get/api/admin/users
-    -Holt alle Benutzer
+    - Holt alle Benutzer
     - Optional mit Suchfilter? search= Anna
     - Nutzt AdminService.GetUserListAsync()
-    -Qm-Manager sieht komplete Benutzerliste
+    - Qm-Manager sieht komplete Benutzerliste
 
 
 * Get/api/admin/users{id}

@@ -1,5 +1,5 @@
 ﻿using KundenUmfrageTool.Api.Data;
-using KundenUmfrageTool.Api.Dtos;
+using KundenUmfrageTool.Api.Dtos.Auth;
 using KundenUmfrageTool.Api.Models;
 using KundenUmfrageTool.Api.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -33,7 +33,7 @@ namespace KundenUmfrageTool.Api.Controllers
         //"register" hängt sich an deine Route dran => /api/Auth/register
         // POST /api/Auth/register
         [HttpPost("register")]
-        [AllowAnonymous] // ✅ wichtig – darf ohne Token aufgerufen werden
+        [AllowAnonymous] // wichtig – darf ohne Token aufgerufen werden
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             var exists = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
@@ -67,7 +67,7 @@ namespace KundenUmfrageTool.Api.Controllers
         {
             // 1 Benutzer + Rolle laden
             var user = await _db.Users
-                .Include(u => u.Role) // 👈 Rolle mitladen! sonst bleibt user.Role null
+                .Include(u => u.Role) // Rolle mitladen! sonst bleibt user.Role null
                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if (user is null)
@@ -89,3 +89,38 @@ namespace KundenUmfrageTool.Api.Controllers
         }
     }
 }
+/* 
+ AuthController – Registrierung & Login (Öffentlich)
+Dieser Controller ist für Login und Registrierung verantwortlich.
+
+POST /api/auth/register
+
+* Jeder darf sich registrieren (AllowAnonymous)
+
+* Prüft: existiert die E-Mail schon?
+
+* Passwort wird gesalzen + gehasht (bcrypt)
+
+* User wird in DB gespeichert
+
+ * Erstellt einen neuen Benutzer und speichert ihn sicher.
+ 
+
+
+
+
+POST /api/auth/login
+
+* Holt User + Rolle aus DB
+
+* Prüft Passwort (bcrypt)
+
+* Prüft: Ist User aktiv?
+
+* Erstellt JWT-Token über TokenService
+
+* Sendet Token zurück ans Frontend
+
+
+ Benutzer meldet sich an, bekommt ein Token, System weiß dann: das ist QM oder Restaurant-Manager.
+ */

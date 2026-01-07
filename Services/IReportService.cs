@@ -1,6 +1,6 @@
 ﻿using KundenUmfrageTool.Api.Dtos.Reports;
 
-namespace KundenUmfrageTool.Api.Services.Reports
+namespace KundenUmfrageTool.Api.Services
 {
     public interface IReportService
     {

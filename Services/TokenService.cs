@@ -63,3 +63,51 @@ namespace KundenUmfrageTool.Api.Services
         }
     }
 }
+
+
+/*
+ Der Service erstellt login-Token
+Das steht direkt im Pflichtenheft (RBAC / Token-System)
+Was macht das Token?
+
+Ein Token speichert:
+
+ * Benutzer-ID
+
+ * E-Mail
+
+* Rolle (QM, RM)
+
+* roleId (1 = QM, 2 = Manager)
+
+* Ablaufzeit (z. B. 2h)
+
+
+Wozu?
+
+Das Token erlaubt dem Backend:
+
+* zu prüfen WER anfragt
+
+* zu prüfen WELCHE Rechte die Person hat
+
+* zu verhindern, dass Manager fremde Restaurants sehen
+
+* das Frontend kann basierend auf Rolle das Menü filtern
+
+
+
+TokenService = Login-Herzstück.
+Er erstellt den Berechtigungs-Ausweis für das Frontend.
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
